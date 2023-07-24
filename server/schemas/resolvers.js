@@ -7,6 +7,10 @@ const resolvers = {
         me: async () => {
             return User.findOne({ _id }).populate('savedBooks');
         },
+        // Test function to see if addUser works
+        allUsers: async () => {
+            return User.find();
+        }
     },
 
     Mutation: {
@@ -49,3 +53,5 @@ const resolvers = {
         }
     }
 }
+
+module.exports = resolvers
