@@ -9,7 +9,7 @@ const resolvers = {
         },
         // Test function to see if addUser works
         allUsers: async () => {
-            return User.find();
+            return User.find().populate('savedBooks');
         }
     },
 
@@ -36,20 +36,23 @@ const resolvers = {
             const token = signToken(user);
             return { token, user }
         },
-        saveBook: async (parent, { user, body }) => {
-            const updatedUser = await User.findOneAndUpdate(
-                { _id: user._id },
-                { $addToSet: { savedBooks: body }},
-                { new: true, runValidators: true }, 
-            );
-            return updatedUser;
+        saveBook: async (parent, { BookInput }, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { savedBooks: BookInput }},
+                    { new: true, runValidators: true }, 
+                );
+                return updatedUser;
+            } 
         },
-        removeBook: async (parent, { user, params }) => {
+        removeBook: async (parent, { bookId }, context) => {
             const updatedUser = await User.findOneAndUpdate(
-                { _id: user._id},
+                { _id: context.user._id},
                 { $pull: { savedBooks: { bookId: params.bookId }}},
                 { new: true }
-            )
+            );
+            return updatedUser;
         }
     }
 }
