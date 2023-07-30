@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'mysecretssshhhhhhh';
+const secret = 'thiIsMySecretSHHHH'
 const expiration = '2h';
 
 module.exports = {
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
+
+    console.log('--------' + secret)
 
     if (req.headers.authorization) {
       token = token.split(' ').pop().trim();

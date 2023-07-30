@@ -4,8 +4,8 @@ const { signToken } = require('../utils/auth')
 
 const resolvers = {
     Query: {
-        me: async () => {
-            return User.findOne({ _id }).populate('savedBooks');
+        me: async (parent, { _id }, context) => {
+            return User.findOne({ _id: context.user._id }).populate('savedBooks');
         },
         // Test function to see if addUser works
         allUsers: async () => {
@@ -49,7 +49,7 @@ const resolvers = {
         removeBook: async (parent, { bookId }, context) => {
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id},
-                { $pull: { savedBooks: { bookId: params.bookId }}},
+                { $pull: { savedBooks: { bookId: bookId }}},
                 { new: true }
             );
             return updatedUser;
