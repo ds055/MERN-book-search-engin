@@ -14,6 +14,7 @@ const resolvers = {
     },
 
     Mutation: {
+        // logs in user
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 
@@ -31,11 +32,13 @@ const resolvers = {
 
             return { token, user };
         },
+        // create new user
         addUser: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
             return { token, user }
         },
+        // save book to user's list/array
         saveBook: async (parent, { BookInput }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
@@ -46,6 +49,7 @@ const resolvers = {
                 return updatedUser;
             } 
         },
+        // remove a saved book from user's list 
         removeBook: async (parent, { bookId }, context) => {
             const updatedUser = await User.findOneAndUpdate(
                 { _id: context.user._id},

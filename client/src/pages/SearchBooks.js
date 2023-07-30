@@ -10,6 +10,7 @@ import {
 import { SAVE_BOOK } from '../utils/mutations'
 
 import Auth from '../utils/auth';
+// import mutation feature to allow use of mutations
 import { useMutation } from '@apollo/client';
 import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
@@ -79,6 +80,7 @@ const SearchBooks = () => {
     }
 
     try {
+      // use mutation to save current book to database, pass in all book info based on input format found in typeDefs
       const { data } = await saveBook({
         variables: { input: bookToSave}
       })

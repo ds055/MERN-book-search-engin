@@ -8,6 +8,7 @@ const { authMiddleware } = require('./utils/auth');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+// create Apollo server and use authMiddleware as context--allows access to user
 const server = new ApolloServer({
   typeDefs,
   resolvers,
