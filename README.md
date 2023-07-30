@@ -1,6 +1,6 @@
-# React Portfolio
+# MERN Stack: Google Books Search
 
-[Link to Live App](https://ds055.github.io/react-portfolio/)
+[Link to Live App](https://mighty-reaches-10743-bd1e11fe9da9.herokuapp.com/)
 
 ## Description
 Google Book Search is a search engine that derives information from GoogleBooks. This app allows users to create an account and save a list of books from the database.  
